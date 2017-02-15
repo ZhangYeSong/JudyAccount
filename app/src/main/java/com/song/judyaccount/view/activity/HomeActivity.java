@@ -1,9 +1,11 @@
-package com.song.judyaccount;
+package com.song.judyaccount.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomeActivity extends AppCompatActivity {
+import com.song.judyaccount.R;
+
+public class HomeActivity extends AppCompatActivity implements HomeView{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
