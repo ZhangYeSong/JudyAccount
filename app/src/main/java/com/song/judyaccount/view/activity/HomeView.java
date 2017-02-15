@@ -5,4 +5,5 @@ package com.song.judyaccount.view.activity;
  */
 
 public interface HomeView {
+
 }
