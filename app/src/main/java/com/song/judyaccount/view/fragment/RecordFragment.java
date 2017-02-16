@@ -1,5 +1,6 @@
 package com.song.judyaccount.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,11 @@ import android.widget.TextView;
 
 import com.song.judyaccount.R;
 import com.song.judyaccount.adapter.RecordAdapter;
+import com.song.judyaccount.db.RecordDao;
 import com.song.judyaccount.model.RecordBean;
+import com.song.judyaccount.view.activity.WriteActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public class RecordFragment extends Fragment {
     private RecyclerView mRecyclerViewRecord;
     private List<RecordBean> mData;
     private RecordAdapter mRecordAdapter;
+    private RecordDao mRecordDao;
 
     @Nullable
     @Override
@@ -48,19 +51,33 @@ public class RecordFragment extends Fragment {
         mTvExpenseMonth = (TextView) view.findViewById(R.id.tv_expense_month);
         mTvExpenseNum = (TextView) view.findViewById(R.id.tv_expense_num);
         mRecyclerViewRecord = (RecyclerView) view.findViewById(R.id.recycler_view_record);
-        mRecyclerViewRecord.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mData = new ArrayList<>();
-        mData.add(new RecordBean(100,true,1, Calendar.getInstance()));
-        mData.add(new RecordBean(100,false,1, Calendar.getInstance()));
+        mRecordDao = new RecordDao(getContext());
+        List<RecordBean> recordBeanList = mRecordDao.queryAllRecord();
+        mData.addAll(recordBeanList);
+        mIvWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), WriteActivity.class));
+            }
+        });
         updateView();
     }
 
     private void updateView() {
         if (mRecordAdapter == null) {
             mRecordAdapter = new RecordAdapter(mData);
+            mRecyclerViewRecord.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerViewRecord.setAdapter(mRecordAdapter);
         } else {
             mRecordAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateView();
     }
 }

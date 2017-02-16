@@ -7,10 +7,16 @@ import java.util.Calendar;
  */
 
 public class RecordBean {
-    public float money;
+    public int id;
+    public double money;
     public boolean isIncome;
     public int type;
+    public String des;
     public Calendar calendar;
+
+    public RecordBean() {
+        super();
+    }
 
     public RecordBean(float money, boolean isIncome, int type, Calendar calendar) {
         this.money = money;

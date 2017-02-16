@@ -1,7 +1,6 @@
 package com.song.judyaccount.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import com.song.judyaccount.R;
 import com.song.judyaccount.model.RecordBean;
+import com.song.judyaccount.view.activity.WriteActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,8 +33,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         RecordBean recordBean = mData.get(position);
+        int month = recordBean.calendar.get(Calendar.MONTH) + 1;
         int day = recordBean.calendar.get(Calendar.DAY_OF_MONTH);
-        holder.mTvDate.setText(day+"日");
+        holder.mTvDate.setText(month+"月"+day+"日");
         if (position == 0) {
             holder.mTvDate.setVisibility(View.VISIBLE);
         } else {
@@ -44,15 +45,17 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
                 holder.mTvDate.setVisibility(View.VISIBLE);
             }
         }
+        int resId;
         if (recordBean.isIncome) {
-            holder.mTv_des_incom.setText("收入￥" + recordBean.money);
+            holder.mTv_des_incom.setText(WriteActivity.incomeTypes[recordBean.type] + "收入￥" + recordBean.money);
             holder.mTv_des_expense.setText("");
+            resId = WriteActivity.incomeIds[recordBean.type];
         } else {
             holder.mTv_des_incom.setText("");
-            holder.mTv_des_expense.setText("支出￥" + recordBean.money);
+            holder.mTv_des_expense.setText((WriteActivity.expenseTypes[recordBean.type] + "支出￥" + recordBean.money));
+            resId = WriteActivity.expenseIds[recordBean.type];
         }
-        Log.d("111111", "+"+position);
-        Log.d("mData.size()", "+"+mData.size());
+        holder.mIvType.setImageResource(resId);
     }
 
     @Override

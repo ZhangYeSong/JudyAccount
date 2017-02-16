@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_account_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="日常账本"
+        android:textColor="@color/pink"
+        android:textSize="24sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/bt_title_expense"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/selector_rectangle_left"
+            android:enabled="false"
+            android:text="支出"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            />
+
+        <Button
+            android:id="@+id/bt_title_income"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_alignTop="@id/bt_title_expense"
+            android:layout_toRightOf="@id/bt_title_expense"
+            android:layout_weight="1"
+            android:background="@drawable/selector_rectangle_right"
+            android:enabled="true"
+            android:text="收入"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/pink"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_is_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:text="支出"
+            android:textColor="#fff"
+            android:textSize="25sp"/>
+
+        <EditText
+            android:id="@+id/et_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/pink"
+            android:gravity="end"
+            android:hint="0.00"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:paddingRight="10dp"
+            android:textColor="#fff"
+            android:textSize="25sp"
+            android:maxLines="1"
+            />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gl_write"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="5"
+        android:padding="10dp"
+        />
+
+
+</LinearLayout>
