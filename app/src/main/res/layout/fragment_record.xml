@@ -3,10 +3,73 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="这是记账页面"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:id="@+id/iv_write"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/pencil"/>
+        <View
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/iv_write"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/grey"/>
+
+        <TextView
+            android:id="@+id/tv_income_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2月收入:"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignTop="@+id/iv_write"/>
+
+        <TextView
+            android:id="@+id/tv_income_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100.00"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignBottom="@+id/iv_write"/>
+        <TextView
+            android:id="@+id/tv_expense_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="2月支出:"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignTop="@+id/iv_write"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/tv_expense_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100.00"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/iv_write"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>
