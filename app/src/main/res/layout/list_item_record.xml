@@ -6,12 +6,14 @@
 
     <TextView
         android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/shape_kuang"
+        android:gravity="center"
+        android:background="@mipmap/board"
         android:padding="5dp"
         android:text="今天"
+        android:textStyle="italic"
         android:textColor="#000"
         android:textSize="16sp"/>
 
@@ -19,7 +21,7 @@
         android:layout_width="1dp"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/grey"/>
+        android:background="#f00"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#fff"
+                android:background="@color/light_blue"
                 android:src="@mipmap/expense_common"/>
 
         </FrameLayout>

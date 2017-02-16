@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:background="#fff"
+              android:background="@mipmap/bg_record"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
@@ -20,7 +20,7 @@
             android:layout_below="@+id/iv_write"
             android:layout_width="1dp"
             android:layout_height="30dp"
-            android:background="@color/grey"/>
+            android:background="#f00"/>
 
         <TextView
             android:id="@+id/tv_income_month"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="2月收入:"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginLeft="20dp"
             android:layout_alignTop="@+id/iv_write"/>
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="100.00"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginLeft="20dp"
             android:layout_alignBottom="@+id/iv_write"/>
         <TextView
@@ -48,7 +48,7 @@
             android:layout_alignParentEnd="true"
             android:text="2月支出:"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginRight="20dp"
             android:layout_alignTop="@+id/iv_write"
             android:layout_alignParentRight="true"/>
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="100.00"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginRight="20dp"
             android:layout_alignParentEnd="true"
             android:layout_alignBottom="@+id/iv_write"

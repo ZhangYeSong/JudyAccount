@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -138,8 +139,6 @@ public class RecordFragment extends Fragment {
 
             @Override
             public void onEditClick(int position) {
-                closeAnim(position);
-                mData.get(position).isOpen = false;
                 Intent intent = new Intent(getContext(), WriteActivity.class);
                 intent.putExtra("time", mData.get(position).calendar.getTime().getTime());
                 startActivity(intent);
@@ -171,6 +170,9 @@ public class RecordFragment extends Fragment {
         ObjectAnimator alpha4 = ObjectAnimator.ofFloat(mIvEdit, "alpha", 0f, 1f);
         ObjectAnimator translationX1 = ObjectAnimator.ofFloat(mIvDelete, "translationX", 0f, -mRecyclerViewRecord.getWidth()*0.35f);
         ObjectAnimator translationX2 = ObjectAnimator.ofFloat(mIvEdit, "translationX", 0f, mRecyclerViewRecord.getWidth()*0.35f);
+        BounceInterpolator bounceInterpolator = new BounceInterpolator();
+        translationX1.setInterpolator(bounceInterpolator);
+        translationX2.setInterpolator(bounceInterpolator);
         animatorSet.setDuration(1000);
         animatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
         animatorSet.start();
@@ -195,8 +197,10 @@ public class RecordFragment extends Fragment {
 
     @Override
     public void onPause() {
-        closeAnim(prePosition);
-        mData.get(prePosition).isOpen = false;
         super.onPause();
+        if (prePosition != null) {
+            closeAnim(prePosition);
+            mData.get(prePosition).isOpen = false;
+        }
     }
 }

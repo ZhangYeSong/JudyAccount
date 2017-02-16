@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
         mVpHome.setAdapter(homePagerAdapter);
         mTabLayoutHome.setupWithViewPager(mVpHome);
         int normalColor = Color.parseColor("#8C8C8C");
-        int selectColor = Color.parseColor("#3F51B5");
+        int selectColor = Color.parseColor("#000000");
         mTabLayoutHome.setTabTextColors(normalColor, selectColor);
         mTabLayoutHome.setSelectedTabIndicatorColor(selectColor);
 
