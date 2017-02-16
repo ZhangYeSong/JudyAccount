@@ -16,6 +16,7 @@ import com.song.judyaccount.R;
 import com.song.judyaccount.adapter.IconAdapter;
 import com.song.judyaccount.db.RecordDao;
 import com.song.judyaccount.model.IconBean;
+import com.song.judyaccount.model.RecordBean;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +44,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     public static final String[] incomeTypes = {"赚钱","工资","奖金","报销","投资"};
     private LinearLayout mLlInput;
     private RecordDao mRecordDao;
+    private EditText mEtDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +57,36 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         mEtMoney = (EditText) findViewById(R.id.et_money);
         mGlWrite = (GridView) findViewById(R.id.gl_write);
         mLlInput = (LinearLayout) findViewById(R.id.ll_input);
+        mEtDes = (EditText) findViewById(R.id.et_des);
 
+        initList();
         mBtTitleExpense.setOnClickListener(this);
         mBtTitleIncome.setOnClickListener(this);
-        initList();
         mIconAdapter = new IconAdapter(mData);
         mGlWrite.setAdapter(mIconAdapter);
         mGlWrite.setOnItemClickListener(this);
 
+        mEtMoney.requestFocus();
         mEtMoney.setOnEditorActionListener(this);
+        mRecordDao = new RecordDao(this);
+        initData();
+    }
+
+    private void initData() {
+        long time = getIntent().getLongExtra("time", 0);
+        if (time != 0) {
+            RecordBean recordBean = mRecordDao.queryRecord(time);
+            if (recordBean.isIncome) {
+                mBtTitleIncome.performClick();
+                mData.get(recordBean.type).selected = true;
+            } else {
+                mBtTitleExpense.performClick();
+                mData.get(recordBean.type).selected = true;
+            }
+            mEtDes.setText(recordBean.des);
+            mEtMoney.setText(recordBean.money+"");
+        }
+
     }
 
     private void initList() {
@@ -77,7 +100,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
             mIncomeData.add(new IconBean(incomeIds[i], incomeTypes[i], false));
         }
         mData.addAll(mExpenseData);
-        mData.get(prePostion).selected = true;
     }
 
     @Override
@@ -118,20 +140,31 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (v.getId() == mEtDes.getId()) {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                return true;
+            }
+        }
         if (v.getId() == mEtMoney.getId()) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                insertRecord();
+                changeRecord();
                 finish();
+                return true;
             }
         }
         return false;
     }
 
-    private void insertRecord() {
-        mRecordDao = new RecordDao(this);
+    private void changeRecord() {
         boolean isIncome = mBtTitleExpense.isEnabled();
         int type = prePostion;
         double money = Double.parseDouble(mEtMoney.getText().toString());
-        mRecordDao.insertRecord(isIncome, type, money, "", new Date().getTime());
+        String des = mEtDes.getText().toString();
+        long time = getIntent().getLongExtra("time", 0);
+        if (time == 0) {
+            mRecordDao.insertRecord(isIncome, type, money, des, new Date().getTime());
+        } else {
+            mRecordDao.updateRecord(isIncome, type, money, des, time);
+        }
     }
 }

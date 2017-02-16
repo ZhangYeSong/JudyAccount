@@ -20,6 +20,7 @@ import java.util.List;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
     private List<RecordBean> mData;
+    private OnIconClickListener mOnIconClickListener;
     public RecordAdapter(List<RecordBean> data) {
         this.mData = data;
     }
@@ -31,15 +32,17 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         RecordBean recordBean = mData.get(position);
         int month = recordBean.calendar.get(Calendar.MONTH) + 1;
         int day = recordBean.calendar.get(Calendar.DAY_OF_MONTH);
-        holder.mTvDate.setText(month+"月"+day+"日");
+        int dayOfYear = recordBean.calendar.get(Calendar.DAY_OF_YEAR);
         if (position == 0) {
+            holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear,position));
             holder.mTvDate.setVisibility(View.VISIBLE);
         } else {
             if (mData.get(position - 1).calendar.get(Calendar.DAY_OF_MONTH) == day) {
+                holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear,position));
                 holder.mTvDate.setVisibility(View.GONE);
             } else {
                 holder.mTvDate.setVisibility(View.VISIBLE);
@@ -56,6 +59,40 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             resId = WriteActivity.expenseIds[recordBean.type];
         }
         holder.mIvType.setImageResource(resId);
+
+        holder.mIvType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnIconClickListener.onIconClick(position);
+            }
+        });
+        holder.mIvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnIconClickListener.onDeleteClick(position);
+            }
+        });
+        holder.mIvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnIconClickListener.onEditClick(position);
+            }
+        });
+    }
+
+    private double getBudget(int dayOfYear, int position) {
+        double budget = 0;
+        for (int i = 0; i < mData.size(); i++) {
+            RecordBean bean = mData.get(i);
+            if (bean.calendar.get(Calendar.DAY_OF_YEAR) == dayOfYear) {
+                if (bean.isIncome) {
+                    budget += bean.money;
+                } else {
+                    budget -= bean.money;
+                }
+            }
+        }
+        return budget;
     }
 
     @Override
@@ -68,6 +105,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         private final TextView mTv_des_incom;
         private final TextView mTv_des_expense;
         private final ImageView mIvType;
+        private final ImageView mIvDelete;
+        private final ImageView mIvEdit;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +114,18 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             mTv_des_incom = (TextView) itemView.findViewById(R.id.tv_des_incom);
             mTv_des_expense = (TextView) itemView.findViewById(R.id.tv_des_expense);
             mIvType = (ImageView) itemView.findViewById(R.id.iv_type);
+            mIvDelete = (ImageView) itemView.findViewById(R.id.iv_delete);
+            mIvEdit = (ImageView) itemView.findViewById(R.id.iv_edit);
         }
+    }
+
+    public interface OnIconClickListener {
+        void onIconClick(int position);
+        void onDeleteClick(int position);
+        void onEditClick(int position);
+    }
+
+    public void setOnIconClickListener(OnIconClickListener onIconClickListener) {
+        this.mOnIconClickListener = onIconClickListener;
     }
 }

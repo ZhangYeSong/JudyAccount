@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
     }
 
     private void initViewPager() {
-        List<HomePagerInfo> data = new ArrayList<>();
+        final List<HomePagerInfo> data = new ArrayList<>();
         data.add(new HomePagerInfo(TITLES[0], new RecordFragment()));
         data.add(new HomePagerInfo(TITLES[1], new TableFragment()));
         data.add(new HomePagerInfo(TITLES[2], new FundFragment()));
@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
         for (int i = 0; i < 4; i++) {
             mTabLayoutHome.getTabAt(i).setIcon(ICONS[i]);
         }
+
     }
 
     private void initActionBar() {
