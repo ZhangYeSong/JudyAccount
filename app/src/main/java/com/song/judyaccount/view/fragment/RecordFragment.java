@@ -82,24 +82,21 @@ public class RecordFragment extends Fragment {
         mRecordAdapter.setOnIconClickListener(new RecordAdapter.OnIconClickListener() {
             @Override
             public void onIconClick(int position) {
-                if (mData.get(position).isOpen) {
+                if (prePosition != null && prePosition == position) {
                     closeAnim(position);
-                    mData.get(position).isOpen = false;
+                    prePosition = null;
                 } else {
-                    if (prePosition != null && mData.get(prePosition).isOpen) {
+                    if (prePosition != null) {
                         closeAnim(prePosition);
-                        mData.get(prePosition).isOpen = false;
                     }
                     openAnim(position);
-                    mData.get(position).isOpen = true;
                     prePosition = position;
                 }
             }
 
             @Override
             public void onDeleteClick(int position) {
-                closeAnim(position);
-                mData.get(position).isOpen = false;
+                closeWithoutAnim(position);
                 prePosition = null;
                 long time = mData.get(position).calendar.getTime().getTime();
                 mRecordDao.deleteRecord(time);
@@ -118,12 +115,21 @@ public class RecordFragment extends Fragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (prePosition != null) {
                     closeAnim(prePosition);
-                    mData.get(prePosition).isOpen = false;
                     prePosition = null;
                 }
             }
         });
 
+    }
+
+    private void closeWithoutAnim(int position) {
+        getViewByPosition(position);
+        mTv_des_incom.setAlpha(1f);
+        mTv_des_expense.setAlpha(1f);
+        mIvDelete.setAlpha(0f);
+        mIvEdit.setAlpha(0f);
+        mIvDelete.setTranslationX(mRecyclerViewRecord.getWidth()*0.35f);
+        mIvEdit.setTranslationX(-mRecyclerViewRecord.getWidth()*0.35f);
     }
 
     private void initMonthBudget() {
@@ -215,10 +221,8 @@ public class RecordFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (prePosition != null) {
-            closeAnim(prePosition);
-            if (mData.size() > 0 && mData.get(prePosition) != null) {
-                mData.get(prePosition).isOpen = false;
-            }
+            closeWithoutAnim(prePosition);
+            prePosition = null;
         }
     }
 }

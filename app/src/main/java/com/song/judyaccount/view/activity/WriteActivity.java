@@ -2,6 +2,7 @@ package com.song.judyaccount.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -150,7 +151,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         if (v.getId() == mEtMoney.getId()) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 changeRecord();
-                finish();
                 return true;
             }
         }
@@ -160,11 +160,12 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     private void changeRecord() {
         boolean isIncome = mBtTitleExpense.isEnabled();
         int type = prePostion;
-        double money = Double.parseDouble(mEtMoney.getText().toString());
-        if (money == 0) {
+        String qian = mEtMoney.getText().toString();
+        if (TextUtils.isEmpty(qian)) {
             Toast.makeText(getApplicationContext(), "请输入金额", Toast.LENGTH_SHORT).show();
             return;
         }
+        double money = Double.parseDouble(qian);
         String des = mEtDes.getText().toString();
         long time = getIntent().getLongExtra("time", 0);
         if (time == 0) {
@@ -172,5 +173,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         } else {
             mRecordDao.updateRecord(isIncome, type, money, des, time);
         }
+        finish();
     }
 }

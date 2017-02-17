@@ -13,7 +13,6 @@ public class RecordBean {
     public int type;
     public String des;
     public Calendar calendar;
-    public boolean isOpen;
 
     public RecordBean() {
         super();
