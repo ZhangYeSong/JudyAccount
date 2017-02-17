@@ -27,14 +27,14 @@
             />
 
         <Button
-            android:id="@+id/bt_line_chart"
+            android:id="@+id/bt_bar_chart"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignTop="@id/bt_title_expense"
             android:layout_toRightOf="@id/bt_title_expense"
             android:background="@drawable/selector_rectangle_right"
             android:enabled="true"
-            android:text="折线图"
+            android:text="柱状图"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -77,10 +77,22 @@
             android:textSize="18sp"
             />
     </LinearLayout>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pie_chart"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
 
 </LinearLayout>
