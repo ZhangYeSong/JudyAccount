@@ -4,9 +4,83 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_pie_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_rectangle_left"
+            android:enabled="false"
+            android:text="饼状图"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            />
+
+        <Button
+            android:id="@+id/bt_line_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/bt_title_expense"
+            android:layout_toRightOf="@id/bt_title_expense"
+            android:background="@drawable/selector_rectangle_right"
+            android:enabled="true"
+            android:text="折线图"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这是报表界面"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/bt_title_expense"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/selector_rectangle_left"
+            android:enabled="false"
+            android:text="支出"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            />
+
+        <Button
+            android:id="@+id/bt_title_income"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_alignTop="@id/bt_title_expense"
+            android:layout_toRightOf="@id/bt_title_expense"
+            android:layout_weight="1"
+            android:background="@drawable/selector_rectangle_right"
+            android:enabled="true"
+            android:text="收入"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

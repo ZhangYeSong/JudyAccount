@@ -6,5 +6,8 @@
     <color name="grey">#DFDFDF</color>
     <color name="pink">#FD6599</color>
     <color name="orange">#FD5B59</color>
-    <color name="light_blue">#96D9EC</color>
+    <color name="light_blue">#8CEBFF</color>
+    <color name="light_green">#C5FF8C</color>
+    <color name="light_yellow">#FFF78C</color>
+    <color name="light_orange">#FFD28C</color>
 </resources>

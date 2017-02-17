@@ -111,4 +111,5 @@ public class RecordDao {
         db.update("t_record", values, "_time = ?", new String[] {time+""});
         db.close();
     }
+
 }

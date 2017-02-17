@@ -22,6 +22,8 @@ import com.song.judyaccount.db.RecordDao;
 import com.song.judyaccount.model.RecordBean;
 import com.song.judyaccount.view.activity.WriteActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -118,6 +120,7 @@ public class RecordFragment extends Fragment {
                     prePosition = null;
                 }
             }
+
         });
 
     }
@@ -164,6 +167,7 @@ public class RecordFragment extends Fragment {
         }
 
         initMonthBudget();
+        EventBus.getDefault().post(mData);
     }
 
     private void closeAnim(int position) {
@@ -175,7 +179,7 @@ public class RecordFragment extends Fragment {
         ObjectAnimator alpha4 = ObjectAnimator.ofFloat(mIvEdit, "alpha", 1f, 0f);
         ObjectAnimator translationX1 = ObjectAnimator.ofFloat(mIvDelete, "translationX", -mRecyclerViewRecord.getWidth()*0.35f, 0f);
         ObjectAnimator translationX2 = ObjectAnimator.ofFloat(mIvEdit, "translationX", mRecyclerViewRecord.getWidth()*0.35f, 0f);
-        animatorSet.setDuration(1000);
+        animatorSet.setDuration(100);
         animatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
         animatorSet.start();
 
@@ -193,7 +197,7 @@ public class RecordFragment extends Fragment {
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
         translationX1.setInterpolator(bounceInterpolator);
         translationX2.setInterpolator(bounceInterpolator);
-        animatorSet.setDuration(1000);
+        animatorSet.setDuration(500);
         animatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
         animatorSet.start();
     }

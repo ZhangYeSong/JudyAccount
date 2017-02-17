@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
         mVpHome = (ViewPager) findViewById(R.id.vp_home);
         mTabLayoutHome = (TabLayout) findViewById(R.id.tab_layout_home);
         mNavView = (NavigationView) findViewById(R.id.nav_view);
+        mVpHome.setOffscreenPageLimit(4);
         initActionBar();
         initViewPager();
     }
