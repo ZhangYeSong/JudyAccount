@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -130,8 +131,14 @@ public class TableFragment extends Fragment implements View.OnClickListener {
         barDataSet.setValueTextSize(16f);
         barDataSet.setValueTextColor(Color.BLACK);
         BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(1);
         mBarChart.setData(barData);
+        Description description = new Description();
+        description.setText(lebal);
+        mBarChart.setDescription(description);
+        mBarChart.setFitBars(true);
         mBarChart.invalidate();
+
     }
 
     private void updatePieChart() {
@@ -156,7 +163,12 @@ public class TableFragment extends Fragment implements View.OnClickListener {
         pieDataSet.setValueTextSize(16f);
         pieDataSet.setValueTextColor(Color.WHITE);
         PieData pieData = new PieData(pieDataSet);
-
+        Description description = new Description();
+        description.setText(lebal);
+        mPieChart.setDescription(description);
+        mPieChart.setCenterText(lebal);
+        mPieChart.setCenterTextSize(25);
+        mPieChart.setCenterTextColor(getResources().getColor(R.color.pink));
         mPieChart.setData(pieData);
         mPieChart.invalidate();
     }
@@ -170,7 +182,7 @@ public class TableFragment extends Fragment implements View.OnClickListener {
             int key = recordBean.calendar.get(Calendar.DAY_OF_MONTH);
             double value;
             if (month == Calendar.getInstance().get(Calendar.MONTH)) {
-                if (recordBean.isIncome) {
+                if (!recordBean.isIncome) {
                     if (mExBarSet.get(key) == null) {
                         value = recordBean.money;
                     } else {

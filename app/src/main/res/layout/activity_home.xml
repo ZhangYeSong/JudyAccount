@@ -23,7 +23,7 @@
                 android:id="@+id/tv_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="莹莹账本"
+                android:text="记账"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:layout_gravity="center"/>

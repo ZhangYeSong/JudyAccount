@@ -53,7 +53,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         }
         int resId;
         if (recordBean.isIncome) {
-            holder.mTv_des_incom.setText(WriteActivity.incomeTypes[recordBean.type] + "收入￥" + recordBean.money);
+            holder.mTv_des_incom.setText(WriteActivity.incomeTypes[recordBean.type] +
+                    "收入￥" + recordBean.money);
             holder.mTv_des_expense.setText("");
             resId = WriteActivity.incomeIds[recordBean.type];
         } else {

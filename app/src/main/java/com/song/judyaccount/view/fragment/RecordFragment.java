@@ -49,6 +49,8 @@ public class RecordFragment extends Fragment {
     private TextView mTv_des_expense;
     private Integer prePosition;
     private View mRootView;
+    private AnimatorSet mOpenAnimatorSet;
+    private AnimatorSet mCloseAnimatorSet;
 
     @Nullable
     @Override
@@ -69,6 +71,8 @@ public class RecordFragment extends Fragment {
         mTvExpenseNum = (TextView) view.findViewById(R.id.tv_expense_num);
         mRecyclerViewRecord = (RecyclerView) view.findViewById(R.id.recycler_view_record);
 
+        initAnim();
+
         mData = new ArrayList<>();
         mRecordDao = new RecordDao(getContext());
         mIvWrite.setOnClickListener(new View.OnClickListener() {
@@ -86,20 +90,17 @@ public class RecordFragment extends Fragment {
             public void onIconClick(int position) {
                 if (prePosition != null && prePosition == position) {
                     closeAnim(position);
-                    prePosition = null;
                 } else {
                     if (prePosition != null) {
                         closeAnim(prePosition);
                     }
                     openAnim(position);
-                    prePosition = position;
                 }
             }
 
             @Override
             public void onDeleteClick(int position) {
                 closeWithoutAnim(position);
-                prePosition = null;
                 long time = mData.get(position).calendar.getTime().getTime();
                 mRecordDao.deleteRecord(time);
                 updateView();
@@ -117,7 +118,6 @@ public class RecordFragment extends Fragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (prePosition != null) {
                     closeAnim(prePosition);
-                    prePosition = null;
                 }
             }
 
@@ -133,6 +133,7 @@ public class RecordFragment extends Fragment {
         mIvEdit.setAlpha(0f);
         mIvDelete.setTranslationX(mRecyclerViewRecord.getWidth()*0.35f);
         mIvEdit.setTranslationX(-mRecyclerViewRecord.getWidth()*0.35f);
+        prePosition = null;
     }
 
     private void initMonthBudget() {
@@ -170,36 +171,46 @@ public class RecordFragment extends Fragment {
         EventBus.getDefault().post(mData);
     }
 
+    private void initAnim() {
+        mCloseAnimatorSet = new AnimatorSet();
+    }
+
     private void closeAnim(int position) {
         getViewByPosition(position);
-        AnimatorSet animatorSet = new AnimatorSet();
+        mCloseAnimatorSet = new AnimatorSet();
         ObjectAnimator alpha1 = ObjectAnimator.ofFloat(mTv_des_incom, "alpha", 0f, 1f);
         ObjectAnimator alpha2 = ObjectAnimator.ofFloat(mTv_des_expense, "alpha", 0f, 1f);
         ObjectAnimator alpha3 = ObjectAnimator.ofFloat(mIvDelete, "alpha", 1f, 0f);
         ObjectAnimator alpha4 = ObjectAnimator.ofFloat(mIvEdit, "alpha", 1f, 0f);
         ObjectAnimator translationX1 = ObjectAnimator.ofFloat(mIvDelete, "translationX", -mRecyclerViewRecord.getWidth()*0.35f, 0f);
         ObjectAnimator translationX2 = ObjectAnimator.ofFloat(mIvEdit, "translationX", mRecyclerViewRecord.getWidth()*0.35f, 0f);
-        animatorSet.setDuration(100);
-        animatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
-        animatorSet.start();
-
+        mCloseAnimatorSet.setDuration(100);
+        mCloseAnimatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
+        if (!mOpenAnimatorSet.isRunning() && !mCloseAnimatorSet.isRunning()) {
+            mCloseAnimatorSet.start();
+            prePosition = null;
+        }
     }
 
     private void openAnim(int position) {
         getViewByPosition(position);
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator alpha1 = ObjectAnimator.ofFloat(mTv_des_incom, "alpha", 1f, 0f);
-        ObjectAnimator alpha2 = ObjectAnimator.ofFloat(mTv_des_expense, "alpha", 1f, 0f);
-        ObjectAnimator alpha3 = ObjectAnimator.ofFloat(mIvDelete, "alpha", 0f, 1f);
-        ObjectAnimator alpha4 = ObjectAnimator.ofFloat(mIvEdit, "alpha", 0f, 1f);
-        ObjectAnimator translationX1 = ObjectAnimator.ofFloat(mIvDelete, "translationX", 0f, -mRecyclerViewRecord.getWidth()*0.35f);
-        ObjectAnimator translationX2 = ObjectAnimator.ofFloat(mIvEdit, "translationX", 0f, mRecyclerViewRecord.getWidth()*0.35f);
+        mOpenAnimatorSet = new AnimatorSet();
+        ObjectAnimator alpha11 = ObjectAnimator.ofFloat(mTv_des_incom, "alpha", 1f, 0f);
+        ObjectAnimator alpha22 = ObjectAnimator.ofFloat(mTv_des_expense, "alpha", 1f, 0f);
+        ObjectAnimator alpha33 = ObjectAnimator.ofFloat(mIvDelete, "alpha", 0f, 1f);
+        ObjectAnimator alpha44 = ObjectAnimator.ofFloat(mIvEdit, "alpha", 0f, 1f);
+        ObjectAnimator translationX11 = ObjectAnimator.ofFloat(mIvDelete, "translationX", 0f, -mRecyclerViewRecord.getWidth()*0.35f);
+        ObjectAnimator translationX22 = ObjectAnimator.ofFloat(mIvEdit, "translationX", 0f, mRecyclerViewRecord.getWidth()*0.35f);
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
-        translationX1.setInterpolator(bounceInterpolator);
-        translationX2.setInterpolator(bounceInterpolator);
-        animatorSet.setDuration(500);
-        animatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
-        animatorSet.start();
+        translationX11.setInterpolator(bounceInterpolator);
+        translationX22.setInterpolator(bounceInterpolator);
+        mOpenAnimatorSet.setDuration(500);
+        mOpenAnimatorSet.playTogether(alpha11,alpha22,alpha33,alpha44,translationX11,translationX22);
+        if (!mOpenAnimatorSet.isRunning() && !mCloseAnimatorSet.isRunning()) {
+            mOpenAnimatorSet.start();
+            prePosition = position;
+
+        }
     }
 
     private void getViewByPosition(int position) {
@@ -226,7 +237,6 @@ public class RecordFragment extends Fragment {
         super.onPause();
         if (prePosition != null) {
             closeWithoutAnim(prePosition);
-            prePosition = null;
         }
     }
 }

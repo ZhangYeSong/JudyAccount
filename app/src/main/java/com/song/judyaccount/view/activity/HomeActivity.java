@@ -49,6 +49,22 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
         mTabLayoutHome = (TabLayout) findViewById(R.id.tab_layout_home);
         mNavView = (NavigationView) findViewById(R.id.nav_view);
         mVpHome.setOffscreenPageLimit(4);
+        mVpHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTvToolbarTitle.setText(TITLES[position]);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         initActionBar();
         initViewPager();
     }
