@@ -78,7 +78,52 @@ public class RecordFragment extends Fragment {
             }
         });
         updateView();
-        initMonthBudget();
+
+        mRecordAdapter.setOnIconClickListener(new RecordAdapter.OnIconClickListener() {
+            @Override
+            public void onIconClick(int position) {
+                if (mData.get(position).isOpen) {
+                    closeAnim(position);
+                    mData.get(position).isOpen = false;
+                } else {
+                    if (prePosition != null && mData.get(prePosition).isOpen) {
+                        closeAnim(prePosition);
+                        mData.get(prePosition).isOpen = false;
+                    }
+                    openAnim(position);
+                    mData.get(position).isOpen = true;
+                    prePosition = position;
+                }
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                closeAnim(position);
+                mData.get(position).isOpen = false;
+                prePosition = null;
+                long time = mData.get(position).calendar.getTime().getTime();
+                mRecordDao.deleteRecord(time);
+                updateView();
+            }
+
+            @Override
+            public void onEditClick(int position) {
+                Intent intent = new Intent(getContext(), WriteActivity.class);
+                intent.putExtra("time", mData.get(position).calendar.getTime().getTime());
+                startActivity(intent);
+            }
+        });
+        mRecyclerViewRecord.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (prePosition != null) {
+                    closeAnim(prePosition);
+                    mData.get(prePosition).isOpen = false;
+                    prePosition = null;
+                }
+            }
+        });
+
     }
 
     private void initMonthBudget() {
@@ -111,39 +156,8 @@ public class RecordFragment extends Fragment {
         } else {
             mRecordAdapter.notifyDataSetChanged();
         }
-        mRecordAdapter.setOnIconClickListener(new RecordAdapter.OnIconClickListener() {
-            @Override
-            public void onIconClick(int position) {
-                if (mData.get(position).isOpen) {
-                    closeAnim(position);
-                    mData.get(position).isOpen = false;
-                } else {
-                    if (prePosition != null && mData.get(prePosition).isOpen) {
-                        closeAnim(prePosition);
-                        mData.get(prePosition).isOpen = false;
-                    }
-                    openAnim(position);
-                    mData.get(position).isOpen = true;
-                    prePosition = position;
-                }
-            }
 
-            @Override
-            public void onDeleteClick(int position) {
-                closeAnim(position);
-                mData.get(position).isOpen = false;
-                long time = mData.get(position).calendar.getTime().getTime();
-                mRecordDao.deleteRecord(time);
-                updateView();
-            }
-
-            @Override
-            public void onEditClick(int position) {
-                Intent intent = new Intent(getContext(), WriteActivity.class);
-                intent.putExtra("time", mData.get(position).calendar.getTime().getTime());
-                startActivity(intent);
-            }
-        });
+        initMonthBudget();
     }
 
     private void closeAnim(int position) {
@@ -182,10 +196,12 @@ public class RecordFragment extends Fragment {
         int i = position - mLayoutManager.findFirstVisibleItemPosition();
         if (i >= 0) {
             View view = mRecyclerViewRecord.getChildAt(i);
-            mIvDelete = (ImageView) view.findViewById(R.id.iv_delete);
-            mIvEdit = (ImageView) view.findViewById(R.id.iv_edit);
-            mTv_des_incom = (TextView) view.findViewById(R.id.tv_des_incom);
-            mTv_des_expense = (TextView) view.findViewById(R.id.tv_des_expense);
+            if (view != null) {
+                mIvDelete = (ImageView) view.findViewById(R.id.iv_delete);
+                mIvEdit = (ImageView) view.findViewById(R.id.iv_edit);
+                mTv_des_incom = (TextView) view.findViewById(R.id.tv_des_incom);
+                mTv_des_expense = (TextView) view.findViewById(R.id.tv_des_expense);
+            }
         }
     }
 
@@ -200,7 +216,9 @@ public class RecordFragment extends Fragment {
         super.onPause();
         if (prePosition != null) {
             closeAnim(prePosition);
-            mData.get(prePosition).isOpen = false;
+            if (mData.size() > 0 && mData.get(prePosition) != null) {
+                mData.get(prePosition).isOpen = false;
+            }
         }
     }
 }

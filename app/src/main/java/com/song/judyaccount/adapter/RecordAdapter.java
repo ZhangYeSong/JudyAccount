@@ -38,14 +38,17 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         int day = recordBean.calendar.get(Calendar.DAY_OF_MONTH);
         int dayOfYear = recordBean.calendar.get(Calendar.DAY_OF_YEAR);
         if (position == 0) {
-            holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear,position));
+            holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear));
             holder.mTvDate.setVisibility(View.VISIBLE);
+            holder.mLine.setVisibility(View.VISIBLE);
         } else {
             if (mData.get(position - 1).calendar.get(Calendar.DAY_OF_MONTH) == day) {
-                holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear,position));
                 holder.mTvDate.setVisibility(View.GONE);
+                holder.mLine.setVisibility(View.GONE);
             } else {
+                holder.mTvDate.setText(month+"月"+day+"日"+"  收支:"+getBudget(dayOfYear));
                 holder.mTvDate.setVisibility(View.VISIBLE);
+                holder.mLine.setVisibility(View.VISIBLE);
             }
         }
         int resId;
@@ -80,7 +83,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         });
     }
 
-    private double getBudget(int dayOfYear, int position) {
+    private double getBudget(int dayOfYear) {
         double budget = 0;
         for (int i = 0; i < mData.size(); i++) {
             RecordBean bean = mData.get(i);
@@ -107,6 +110,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         private final ImageView mIvType;
         private final ImageView mIvDelete;
         private final ImageView mIvEdit;
+        private final View mLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -116,6 +120,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             mIvType = (ImageView) itemView.findViewById(R.id.iv_type);
             mIvDelete = (ImageView) itemView.findViewById(R.id.iv_delete);
             mIvEdit = (ImageView) itemView.findViewById(R.id.iv_edit);
+            mLine = itemView.findViewById(R.id.view_line);
         }
     }
 

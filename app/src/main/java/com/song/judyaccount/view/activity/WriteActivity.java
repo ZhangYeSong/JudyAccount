@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.song.judyaccount.R;
 import com.song.judyaccount.adapter.IconAdapter;
@@ -83,6 +84,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 mBtTitleExpense.performClick();
                 mData.get(recordBean.type).selected = true;
             }
+            prePostion = recordBean.type;
             mEtDes.setText(recordBean.des);
             mEtMoney.setText(recordBean.money+"");
         }
@@ -159,6 +161,10 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         boolean isIncome = mBtTitleExpense.isEnabled();
         int type = prePostion;
         double money = Double.parseDouble(mEtMoney.getText().toString());
+        if (money == 0) {
+            Toast.makeText(getApplicationContext(), "请输入金额", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String des = mEtDes.getText().toString();
         long time = getIntent().getLongExtra("time", 0);
         if (time == 0) {
