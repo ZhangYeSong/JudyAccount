@@ -1,7 +1,6 @@
 package com.song.judyaccount.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WriteActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, TextView.OnEditorActionListener {
+public class WriteActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, TextView.OnEditorActionListener {
     private TextView mTvAccountBook;
     private Button mBtTitleExpense;
     private Button mBtTitleIncome;

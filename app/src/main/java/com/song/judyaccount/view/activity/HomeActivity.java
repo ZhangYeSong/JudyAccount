@@ -8,15 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.avos.sns.SNS;
+import com.avos.sns.SNSType;
 import com.song.judyaccount.R;
 import com.song.judyaccount.adapter.HomePagerAdapter;
 import com.song.judyaccount.model.HomePagerInfo;
-import com.song.judyaccount.presenter.HomePresenterImpl;
 import com.song.judyaccount.view.fragment.FundFragment;
 import com.song.judyaccount.view.fragment.MoreFragment;
 import com.song.judyaccount.view.fragment.RecordFragment;
@@ -25,7 +25,7 @@ import com.song.judyaccount.view.fragment.TableFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements HomeView{
+public class HomeActivity extends BaseActivity{
     private Toolbar mToolBar;
     private TextView mTvToolbarTitle;
     private ViewPager mVpHome;
@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
     private NavigationView mNavView;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private HomePresenterImpl mHomePresenter;
     private final String[] TITLES = {"记账", "报表", "资金", "更多"};
     private final int[] ICONS = {R.mipmap.record, R.mipmap.table, R.mipmap.fund, R.mipmap.more};
 
@@ -41,7 +40,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        mHomePresenter = new HomePresenterImpl(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolBar = (Toolbar) findViewById(R.id.tool_bar);
         mTvToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
@@ -114,5 +112,11 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SNS.logout(this, SNSType.AVOSCloudSNSQQ);
     }
 }

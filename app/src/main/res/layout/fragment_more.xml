@@ -1,12 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="这是更多界面"/>
+        android:layout_height="250dp"
+        android:background="@mipmap/bg_leave">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_portrait"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/black_man"
+            app:civ_fill_color="#000"
+            />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/civ_portrait"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="未命名"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_setting"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="设置"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_sync"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_upload"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="同步"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_help"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_help"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="帮助"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_theme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_theme"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="主题"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_response"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_response"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="反馈"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_resume"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/more_resume"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="简历"
+            android:background="@drawable/shape_kuang_grey"
+            android:textColor="#000"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -71,8 +71,6 @@ public class RecordFragment extends Fragment {
         mTvExpenseNum = (TextView) view.findViewById(R.id.tv_expense_num);
         mRecyclerViewRecord = (RecyclerView) view.findViewById(R.id.recycler_view_record);
 
-        initAnim();
-
         mData = new ArrayList<>();
         mRecordDao = new RecordDao(getContext());
         mIvWrite.setOnClickListener(new View.OnClickListener() {
@@ -171,9 +169,6 @@ public class RecordFragment extends Fragment {
         EventBus.getDefault().post(mData);
     }
 
-    private void initAnim() {
-        mCloseAnimatorSet = new AnimatorSet();
-    }
 
     private void closeAnim(int position) {
         getViewByPosition(position);
@@ -186,10 +181,8 @@ public class RecordFragment extends Fragment {
         ObjectAnimator translationX2 = ObjectAnimator.ofFloat(mIvEdit, "translationX", mRecyclerViewRecord.getWidth()*0.35f, 0f);
         mCloseAnimatorSet.setDuration(100);
         mCloseAnimatorSet.playTogether(alpha1,alpha2,alpha3,alpha4,translationX1,translationX2);
-        if (!mOpenAnimatorSet.isRunning() && !mCloseAnimatorSet.isRunning()) {
-            mCloseAnimatorSet.start();
-            prePosition = null;
-        }
+        mCloseAnimatorSet.start();
+        prePosition = null;
     }
 
     private void openAnim(int position) {
@@ -204,13 +197,11 @@ public class RecordFragment extends Fragment {
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
         translationX11.setInterpolator(bounceInterpolator);
         translationX22.setInterpolator(bounceInterpolator);
-        mOpenAnimatorSet.setDuration(500);
+        mOpenAnimatorSet.setDuration(200);
         mOpenAnimatorSet.playTogether(alpha11,alpha22,alpha33,alpha44,translationX11,translationX22);
-        if (!mOpenAnimatorSet.isRunning() && !mCloseAnimatorSet.isRunning()) {
-            mOpenAnimatorSet.start();
-            prePosition = position;
+        mOpenAnimatorSet.start();
+        prePosition = position;
 
-        }
     }
 
     private void getViewByPosition(int position) {
