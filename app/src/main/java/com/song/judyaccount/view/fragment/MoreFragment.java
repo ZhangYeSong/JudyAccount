@@ -20,10 +20,10 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.SaveCallback;
-import com.bumptech.glide.Glide;
 import com.song.judyaccount.R;
 import com.song.judyaccount.db.RecordDao;
 import com.song.judyaccount.model.RecordBean;
+import com.song.judyaccount.view.activity.HomeActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -79,18 +79,10 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCurrentUser = AVUser.getCurrentUser();
-        showUserDataFromNet();
+        ((HomeActivity)getActivity()).showUserDataFromNet(mCivPortrait, mTvNickname);
     }
 
-    private void showUserDataFromNet() {
-        String nickName = (String) mCurrentUser.get("nickName");
-        if (nickName != null) {
-            mTvNickname.setText(nickName);
-        }
-        String portraitUrl = (String) mCurrentUser.get("portraitUrl");
-        Glide.with(this).load(portraitUrl).into(mCivPortrait);
 
-    }
 
     private void assignViews() {
         mCivPortrait = (CircleImageView) mRootView.findViewById(R.id.civ_portrait);
@@ -114,6 +106,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_sync:
                 syncRecordDb();
+                Toast.makeText(getContext(), "上传成功!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_help:
 

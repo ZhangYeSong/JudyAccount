@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/more_setting"
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_response"
+            android:icon="@mipmap/more_response"
+            android:title="反馈" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@mipmap/more_help"
+            android:title="帮助" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@mipmap/more_share"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_resume"
+            android:icon="@mipmap/more_resume"
+            android:title="作者" />
+
+    </group>
+</menu>

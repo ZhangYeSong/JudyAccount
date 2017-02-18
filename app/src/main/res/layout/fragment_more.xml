@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@mipmap/bg_leave">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@mipmap/bg_leave">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_portrait"
@@ -32,6 +32,7 @@
             android:textStyle="bold"/>
     </RelativeLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -42,11 +43,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_setting"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="设置"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -56,11 +57,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_upload"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="同步"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -70,11 +71,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_help"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="帮助"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -91,11 +92,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_theme"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="主题"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -105,11 +106,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_response"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="反馈"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
@@ -119,11 +120,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/shape_kuang_grey"
             android:drawableTop="@mipmap/more_resume"
             android:gravity="center"
             android:paddingTop="20dp"
             android:text="简历"
-            android:background="@drawable/shape_kuang_grey"
             android:textColor="#000"
             android:textSize="18sp"
             />
